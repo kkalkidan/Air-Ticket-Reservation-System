@@ -1,0 +1,26 @@
+
+{% extends 'layout.html' %}
+
+{% block layout %}
+
+<div class='search_result'>
+  {% if list != null %}
+    {% for v in list %}
+         <div class='result'>
+            <div>
+               Flight Number : {{v.flight_num}}  <br>
+               Airlines Name : {{v.airline_name}}<br>
+               Departure Airport:{{v.departure_airport}}<br>
+               Departure Time : {{v.departure_time}}<br>
+               Arrival Airport : {{v.arrival_airport}}<br>
+               Arrival Time : {{v.arrival_time}}<br>
+               Price : {{v.price}}<br>
+               Status : {{v.status}}<br>
+               Airplane ID : {{v.airplane_id}}<br>
+             </div>
+         </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock %}

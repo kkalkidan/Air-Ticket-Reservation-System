@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug import generate_password_hash, check_password_hash
+# from werkzeug import generate_password_hash, check_password_hash
+import hashlib
 
 db = SQLAlchemy()
 
@@ -26,4 +27,64 @@ class Flight(db.Model):
         self.price = price
         self.status = status
         self.airplane_id = airplane_id
-    
+
+class Customer(db.Model):
+    __tablename__ = 'customer'
+    email = db.Column(db.String(50), primary_key = True)
+    name = db.Column(db.String(50))
+    password = db.Column(db.String(50))
+    building_number = db.Column(db.String(30))
+    street = db.Column(db.String(30))
+    city = db.Column(db.String(30))
+    state = db.Column(db.String(30))
+    phone_number = db.Column(db.Integer)
+    passport_number = db.Column(db.String(30))
+    passport_expiration = db.Column(db.Date)
+    passport_country = db.Column(db.String(50))
+    date_of_birth = db.Column(db.Date)
+
+    def __init__(self, email, name, password, building_number, street, city, state,
+phone_number, passport_number, passport_expiration, passport_country, date_of_birth):
+        self.email = email
+        self.name = name
+        self.building_number = building_number
+        self.street = street
+        self.city = city
+        self.state = state
+        self.phone_number = phone_number
+        self.passport_number = passport_number
+        self.passport_expiration = passport_expiration
+        self.passport_country = passport_country
+        self.date_of_birth = date_of_birth
+        self.password = self.hash_password(password)
+
+    def hash_password(self, password):
+        return hashlib.md5(password.encode()).hexdigest()
+
+    def check_password(self, password):
+        return self.hash_password(password) == self.password
+
+class Airline_Staff(db.Model):
+    __tablename__ = 'airline_staff'
+    username = db.Column(db.String(50), primary_key = True)
+    password = db.Column(db.String(50))
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    date_of_birth = db.Column(db.Date)
+    airline_name = db.Column(db.String(50))
+
+
+    def __init__(self, username, password, first_name, last_name, date_of_birth, airline_name):
+
+        self.username = username
+        self.first_name = first_name
+        self.last_name = last_name
+        self.date_of_birth = date_of_birth
+        self.airline_name = airline_name
+        self.password = self.hash_password(password)
+
+    def hash_password(self, password):
+        return hashlib.md5(password.encode()).hexdigest()
+
+    def check_password(self, password):
+        return self.hash_password(password) == self.password

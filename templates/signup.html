@@ -1,0 +1,170 @@
+{% extends 'index.html' %}
+
+{% block index %}
+
+  <main class='container signup-section'>
+  <div class='section-content'>
+    <h2>
+      Create an account
+    </h2>
+
+  <form method="POST" action='#'>
+
+    <div class='form-group'>
+    {{form.name.label}}
+
+    {% if form.name.errors %}
+    {% for error in form.name.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+    {{form.name(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.email.label}}
+
+    {% if form.email.errors %}
+    {% for error in form.email.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+    {{form.email(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.password.label}}
+
+    {{ form.csrf_token }}
+
+    {% if form.password.errors %}
+    {% for error in form.password.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+
+    {{form.password(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.building_number.label}}
+
+    {% if form.building_number.errors %}
+    {% for error in form.building_number.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+    {{form.building_number(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.street.label}}
+
+    {% if form.street.errors %}
+    {% for error in form.street.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+
+    {{form.street(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.city.label}}
+
+    {% if form.city.errors %}
+    {% for error in form.city.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+
+    {{form.city(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.state.label}}
+
+    {% if form.state.errors %}
+    {% for error in form.state.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+    {{form.state(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.phone_number.label}}
+
+    {% if form.phone_number.errors %}
+    {% for error in form.phone_number.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+
+    {{form.phone_number(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.passport_number.label}}
+
+    {% if form.passport_number.errors %}
+    {% for error in form.passport_number.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+
+    {{form.passport_number(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.passport_expiration.label}}
+
+    {% if form.passport_expiration.errors %}
+    {% for error in form.passport_expiration.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+    {{form.passport_expiration(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.passport_country.label}}
+
+    {% if form.passport_country.errors %}
+    {% for error in form.passport_country.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+
+    {{form.passport_country(required = False)}}
+  </div>
+
+
+
+  <div class='form-group'>
+    {{form.date_of_birth.label}}
+
+    {% if form.date_of_birth.errors %}
+    {% for error in form.date_of_birth.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+    {{form.date_of_birth(required = False)}}
+  </div>
+
+  {{form.submit (class='btn-primary')}}
+</form>
+
+{% endblock %}

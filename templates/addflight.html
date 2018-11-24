@@ -1,0 +1,157 @@
+
+{% extends 'index.html' %}
+
+{% block index %}
+
+  <main class='container signup-section'>
+  <div class='section-content'>
+    <h2>
+      Add Flight
+    </h2>
+
+  <form method="POST" action='#'>
+
+    <div class='form-group'>
+    {{form.airline_name.label}}
+
+    {% if form.airline_name.errors %}
+    {% for error in form.airline_name.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+    {{form.airline_name(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.flight_num.label}}
+
+    {% if form.flight_num.errors %}
+    {% for error in form.flight_num.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+    {{form.flight_num(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.departure_airport.label}}
+
+    {{ form.csrf_token }}
+
+    {% if form.departure_airport.errors %}
+    {% for error in form.departure_airport.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+
+    {{form.departure_airport(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.departure_date.label}}
+
+    {% if form.departure_date.errors %}
+    {% for error in form.departure_date.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+    {{form.departure_date(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.departure_time.label}}
+
+    {% if form.departure_time.errors %}
+    {% for error in form.departure_time.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+    {{form.departure_time(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.arrival_airport.label}}
+
+    {% if form.arrival_airport.errors %}
+    {% for error in form.arrival_airport.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+
+    {{form.arrival_airport(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.arrival_date.label}}
+
+    {% if form.arrival_date.errors %}
+    {% for error in form.arrival_date.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+
+    {{form.arrival_date(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.arrival_time.label}}
+
+    {% if form.arrival_time.errors %}
+    {% for error in form.arrival_time.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+
+    {{form.arrival_time(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.price.label}}
+
+    {% if form.price.errors %}
+    {% for error in form.price.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+    {{form.price(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.status.label}}
+
+    {% if form.status.errors %}
+    {% for error in form.status.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+
+    {{form.status(required = False)}}
+  </div>
+
+  <div class='form-group'>
+    {{form.airplane_id.label}}
+
+    {% if form.airplane_id.errors %}
+    {% for error in form.airplane_id.errors %}
+    <p class='error-message'> {{error}} </p>
+    {% endfor %}
+    {% endif %}
+
+
+    {{form.airplane_id(required = False)}}
+  </div>
+
+  {{form.submit (class='btn-primary')}}
+</form>
+
+{% endblock %}
