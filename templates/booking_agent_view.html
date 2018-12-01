@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link href ='static/css/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" id = "bootstrap-css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<style>
+    body,h1,h2,h3,h4,h5,h6 {
+    font-family: "Karma", sans-serif;
+    }
+    .w3-bar-block .w3-bar-item
+    {padding:20px;}
+    .check
+    {
+    opacity:0.5;
+	color:#996;
+
+    }
+
+    food{
+
+    word-wrap: break-word;
+
+    }
+</style>
+</head>
+
+<body>
+<!-- Top menu -->
+<div class="w3-top">
+    <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+
+        <div class="w3-center w3-padding-16">
+            <center><img src="http://ashamafrica.com/images/Sheba-Miles.png" alt="Image result for smiley stickers" width="300" height="50" /></center>
+
+        </div>
+    </div>
+</div>
+<!-- !PAGE CONTENT! -->
+<div id="activities" class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
+
+    <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+        <center><h3>Welcome Booking Agent: </h3></center>
+        <form method="POST">
+            <div class="w3-quarter">
+                <label class="btn btn-light">
+                <img src="https://www.nasa.gov/sites/default/files/images/636734main2_ED12-0096-02_672.jpg" alt="View My Flights" style="width:100%" class="img-thumbnail img-check">
+                    <input type="checkbox" name="View My Flights" id="item1" value="View My Flights" class="hidden" autocomplete="off"></label>
+                <h4>View My Flights</h4>
+            </div>
+            <div class="w3-quarter">
+                <label class="btn btn-light">
+                <img src="https://www.abondance.com/wp-content/uploads/2018/07/image-search.jpg" alt="Search for Flights" style="width:100%" class="img-thumbnail img-check">
+                    <input type="checkbox" name="Search for Flights" id="item1" value="Search for Flights" class="hidden" autocomplete="off"></label>
+                <h4>Search for Flights</h4>
+            </div>
+            <div class="w3-quarter">
+                <label class="btn btn-light">
+                <img src="https://www.hirum.com.au/wp-content/uploads/2015/06/commission-rate-increase.jpg" alt="View my Commission" style="width:100%" class="img-thumbnail img-check">
+                    <input type="checkbox" name="View my Commission" id="item1" value="View My Commission" class="hidden" autocomplete="off"></label>
+                <h4>View my Commission</h4>
+            </div>
+            <div class="w3-quarter">
+                <label class="btn btn-light">
+                <img src="http://blog.undergroundelephant.com/wp-content/uploads/2014/12/Loyal_Customers_v2.jpg" alt="Top Customers" style="width:100%" class="img-thumbnail img-check">
+                    <input type="checkbox" name="Top Customers" id="item1" value="Top Customers" class="hidden" autocomplete="off"></label>
+                <h4>Top Customers</h4>
+            </div>
+
+
+    </div>
+    <input type="submit" value="Select" class="btn btn-success">
+    </form>
+
+
+
+
+
+</div>
+
+<script>
+    $(document).ready(function(e){
+        $(".img-check").click(function(){
+            $(this).toggleClass("check");
+        });
+    });
+
+</script>
+
+
+
+
+
+
+</body>
+</html>

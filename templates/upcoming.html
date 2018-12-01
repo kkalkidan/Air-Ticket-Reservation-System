@@ -1,42 +1,280 @@
 
-{% extends 'index.html' %}
+<!DOCTYPE html>
 
-{% block index %}
+<html>
 
- {% if form != null %}
-  <form method='POST' action='#'>
+<head>
+    <link href ='static/css/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <div class='form-group'>
-      {{form.arrival_airport.label}}
-      {{form.arrival_airport}}
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" id = "bootstrap-css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<style>
+    #Purchase{display:none;}
+    #purchase_flight{
+            display:none;
+        }
+    #Search{
+        display:none;
+    }
+    body,h1,h2,h3,h4,h5,h6 {
+    font-family: "Karma", sans-serif;
+    }
+    .w3-bar-block .w3-bar-item
+    {padding:20px;}
+    .check
+    {
+    opacity:0.5;
+	color:#996;
+
+    }
+
+    food{
+
+    word-wrap: break-word;
+
+    }
+</style>
+</head>
+
+<body>
+<!-- Top menu -->
+<div class="w3-top">
+    <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+
+        <div class="w3-center w3-padding-16">
+            <center><img src="http://ashamafrica.com/images/Sheba-Miles.png" alt="Image result for smiley stickers" width="300" height="50" /></center>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- !PAGE CONTENT! -->
+<div id="purchase_flight" class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
+
+    <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+        <center><h3>Please Select Your flights: </h3></center>
+        <form method="POST" id = "SelectFlights" name = "SelectFlights">
+            <div id = "Flights">
+
+            </div>
+
+    </div>
+    <input type="submit" value="Purhcase" class="btn btn-success" name="Purchase">
+    </form>
+
+
+
+
+
+</div>
+
+
+
+<main class='main-section'>
+    <div id = "Search" class='container'>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class= 'section-content'>
+            <h2> Search for Upcoming flights </h2>
+            {% if form != null %}
+            <form method='POST' action='#'>
+                <div class='form-group'>
+                    {{form.arrival_airport.label}}
+                    {{form.arrival_airport}}
+                </div>
+
+                <div class='form-group'>
+                    {{form.departure_airport.label}}
+                    {{form.departure_airport}}
+                </div>
+                {{form.submit (class='btn-primary')}}
+            </form>
+            {% endif %}
+
+
+
+        </div>
+    </div>
+</main>
+
+<div id = "Purchase" class='container'>
+        <div class= 'section-content'>
+            <br>
+        <br>
+        <br>
+        <br>
+        <br>
+            <h2> Enter the Required Info </h2>
+
+
+            {% if purchase_form != null %}
+            <form method='POST' action='#'>
+
+                <div class='form-group'>
+                    {{purchase_form.customer_email.label}}
+                    {{purchase_form.customer_email}}
+                </div>
+                {% if check == 1 %}
+                <div class='form-group'>
+                    {{purchase_form.booking_agent_id.label}}
+                    {{purchase_form.booking_agent_id}}
+                </div>
+                {% endif %}
+                <div class='form-group'>
+                    {{purchase_form.purchase_date.label}}
+                    {{purchase_form.purchase_date}}
+                </div>
+                {{form.submit (class='btn-primary')}}
+            </form>
+            {% endif %}
+
+
+
+        </div>
     </div>
 
-    <div class='form-group'>
-      {{form.departure_airport.label}}
-      {{form.departure_airport}}
-    </div>
 
-    {{form.submit (class='btn-primary')}}
-  </form>
- {% endif %}
 
-  <div class='search_result'>
-    {% if list != null %}
-      {% for v in list %}
-           <div class='result'>
-              <div>
-                 Flight Number : {{v.flight_num}}  <br>
-                 Airlines Name : {{v.airline_name}}<br>
-                 Departure Airport:{{v.departure_airport}}<br>
-                 Departure Time : {{v.departure_time}}<br>
-                 Arrival Airport : {{v.arrival_airport}}<br>
-                 Arrival Time : {{v.arrival_time}}<br>
-                 Price : {{v.price}}<br>
-                 Status : {{v.status}}<br>
-                 Airplane ID : {{v.airplane_id}}<br>
-               </div>
-           </div>
-      {% endfor %}
-    {% endif %}
-  </div>
-{% endblock %}
+
+
+
+
+
+
+<script type="text/javascript">
+     var check2 = {{ check2 }};
+     var purchase = document.getElementById("purchase_flight");
+     var search = document.getElementById("Search");
+     var purchase_form = document.getElementById("Purchase");
+
+    if (check2 == 3){
+            purchase_form.style.display = "block";
+    }
+
+
+
+     if (check2 == 1){
+
+            purchase.style.display = "block";
+            search.style.display = "none";
+
+            var my_flights = {{ list|tojson }};
+            console.log(my_flights);
+            console.log(Object.keys(my_flights).length);
+            var my_div = document.getElementById("Flights");
+            for (var i = 0; i < Object.keys(my_flights).length; i++){
+                var inner_div = document.createElement("div");
+                inner_div.className = "w3-quarter";
+                console.log("bebe");
+                var inner_label = document.createElement("label");
+                inner_label.className = "btn btn-light";
+
+                var image = document.createElement("img");
+                image.setAttribute("src", "https://timedotcom.files.wordpress.com/2018/08/airplane-stolen-seattle-dash8-a400-august-10.jpg");
+                image.setAttribute("alt", "Airplane");
+                image.setAttribute("Class", "img-thumbnail img-check");
+                image.setAttribute("style", "width:100%");
+
+
+
+                var inner_input = document.createElement("input");
+                inner_input.className = "hidden";
+                inner_input.type = "checkbox";
+
+                var fn = my_flights[i][5].toString;
+                inner_input.name = my_flights[i][0] + fn;
+                inner_input.value = i.toString();
+                inner_input.autocomplete = "off";
+
+                inner_label.appendChild(image);
+                inner_label.appendChild(inner_input);
+                inner_div.appendChild(inner_label);
+
+
+                var desc1 = document.createElement("h4");
+                var desc2 = document.createElement("h4");
+                var desc3 = document.createElement("h4");
+                var desc4 = document.createElement("h4");
+
+                var tex1 = my_flights[i][0] + " " + my_flights[i][3] + "$";
+                var node1 = document.createTextNode(tex1);
+                desc1.appendChild(node1);
+
+                var tex2 = my_flights[i][1];
+                var node2 = document.createTextNode(tex2);
+                desc2.appendChild(node2);
+
+                var tex3 = my_flights[i][2];
+                var node3 = document.createTextNode(tex3);
+                desc3.appendChild(node3);
+
+                var tex4 = "Status: " + my_flights[i][4];
+                var node4 = document.createTextNode(tex4);
+                desc4.appendChild(node4);
+
+                inner_div.appendChild(desc1);
+                inner_div.appendChild(desc2);
+                inner_div.appendChild(desc3);
+                inner_div.appendChild(desc4);
+
+
+                my_div.appendChild(inner_div);
+
+            }
+
+
+
+
+
+     }
+
+     if(check2 == 0){
+            purchase.style.display = "none";
+
+            search.style.display = "block";
+
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+    $(document).ready(function(e){
+    		$(".img-check").click(function(){
+				$(this).toggleClass("check");
+			});
+	});
+
+
+</script>
+
+
+
+
+
+
+</body>
+</html>

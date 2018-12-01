@@ -1,7 +1,8 @@
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, SubmitField, IntegerField
-from wtforms.fields.html5 import DateField, TimeField
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.fields.html5 import DateField, TimeField, IntegerField
 from wtforms.validators import DataRequired, Email, Length
+import datetime
 
 class UpcomingForm(Form):
 
@@ -48,6 +49,7 @@ class FlightForm(Form):
     submit = SubmitField('Add Flight')
 
 class StaffForm(Form):
+
     username = StringField('User name', validators = [ DataRequired()])
     password = PasswordField('Password', validators = [ DataRequired()])
     first_name = StringField('First name', validators = [ DataRequired()])
@@ -57,6 +59,38 @@ class StaffForm(Form):
     submit = SubmitField('Add Staff')
 
 class StaffSignInForm(Form):
+
     username = StringField('User name', validators = [ DataRequired()])
     password = PasswordField('Password', validators = [ DataRequired()])
     submit = SubmitField('Sign in')
+
+class FlightSearchByDateRange(Form):
+    start_date = DateField('From', validators=[DataRequired()], default=datetime.datetime.now().date())
+    end_date = DateField('To',  validators=[DataRequired()], default=datetime.datetime.now().date() + datetime.timedelta(days=30))
+    submit = SubmitField('Search')
+
+class StaffDetails(Form):
+    flight_num = IntegerField('Flight Number', validators=[DataRequired()])
+    edit_status = StringField('Current Status', validators=[DataRequired()])
+    submit = SubmitField('Edit Status')
+
+class AddAirPlane(Form):
+    airline_name = StringField('Airline name', validators=[DataRequired()])
+    airplane_id = IntegerField('Airplane Id', validators=[DataRequired()])
+    seats = IntegerField('Number of seats', validators=[DataRequired()])
+    submit = SubmitField('Add Airplane')
+
+class Booking_Agent_SignInForm(Form):
+    email = StringField('Email', validators = [ DataRequired()])
+    password = PasswordField('Password', validators = [ DataRequired()])
+    submit = SubmitField('Sign in')
+
+class AgentPurchaseForm(Form):
+    customer_email = StringField('customer_email', validators=[DataRequired()])
+    booking_agent_id = IntegerField('booking_agent_id', validators=[DataRequired()])
+    purchase_date = DateField('purchase date', validators=[DataRequired()])
+    # submit = SubmitField('Purchase')
+class ClientPurchaseForm(Form):
+    customer_email = StringField('customer_email', validators=[DataRequired()])
+    purchase_date = DateField('purchase date', validators=[DataRequired()])
+    # submit = SubmitField('Purchase')

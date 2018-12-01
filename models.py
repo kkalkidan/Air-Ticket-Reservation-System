@@ -88,3 +88,59 @@ class Airline_Staff(db.Model):
 
     def check_password(self, password):
         return self.hash_password(password) == self.password
+
+class Airplane(db.Model):
+    __tablename__ = 'airplane'
+    airline_name = db.Column(db.String(50), primary_key = True)
+    airplane_id = db.Column(db.Integer, primary_key = True)
+    seats = db.Column(db.Integer)
+
+    def __init__(self, airline_name,airplane_id, seats):
+        self.airline_name = airline_name
+        self.airplane_id = airplane_id
+        self.seats = seats
+
+class Booking_Agent(db.Model):
+    __tablename__ = 'booking_agent'
+    email = db.Column(db.String(50), primary_key = True)
+    password = db.Column(db.String(50))
+    booking_agent_id = db.Column(db.String(50))
+
+    def __init__(self, email, password, booking_agent_id):
+
+        self.email = email
+        self.password = password
+        self.booking_agent_id = booking_agent_id
+
+    def hash_password(self, password):
+
+        return hashlib.md5(password.encode()).hexdigest()
+
+    def check_password(self, password):
+        return self.hash_password(password) == self.password
+
+class Ticket(db.Model):
+    __tablename__ = 'ticket'
+    ticket_id = db.Column(db.Integer, primary_key=True)
+    airline_name = db.Column(db.String(50))
+    flight_num = db.Column(db.String(50))
+
+    def __init__(self, ticket_id, airline_name, flight_num):
+
+        self.ticket_id = ticket_id
+        self.airline_name = airline_name
+        self.flight_num = flight_num
+
+class Purchases(db.Model):
+    __tablename__ = 'purchases'
+    ticket_id = db.Column(db.Integer, primary_key=True)
+    customer_email = db.Column(db.String(50), primary_key=True)
+    booking_agent_id = db.Column(db.Integer)
+    purchase_date = db.Column(db.Date)
+
+    def __init__(self, ticket_id, customer_email, booking_agent_id, purchase_date):
+
+        self.ticket_id = ticket_id
+        self.customer_email = customer_email
+        self.booking_agent_id = booking_agent_id
+        self.purchase_date = purchase_date

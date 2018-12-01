@@ -1,0 +1,39 @@
+
+ {% if form != null %}
+  <form method='POST' action='#'>
+   {{ form.hidden_tag() }}
+    <div class='form-group'>
+      {{form.arrival_airport.label}}
+      {{form.arrival_airport}}
+    </div>
+
+    <div class='form-group'>
+      {{form.departure_airport.label}}
+      {{form.departure_airport}}
+    </div>
+
+    {{form.submit (class='btn-primary')}}
+  </form>
+ {% endif %}
+
+
+  <div class='search_result'>
+    {% if list != null %}
+      {% for v in list %}
+           <div class='result'>
+              <div>
+                <a href="{{url_for('list_customers', flight_num=v.flight_num)}}"> 
+                Flight Number : {{v.flight_num}}  <br>  </a>
+                 Airlines Name : {{v.airline_name}}<br>
+                 Departure Airport:{{v.departure_airport}}<br>
+                 Departure Time : {{v.departure_time}}<br>
+                 Arrival Airport : {{v.arrival_airport}}<br>
+                 Arrival Time : {{v.arrival_time}}<br>
+                 Price : {{v.price}}<br>
+                 Status : {{v.status}}<br>
+                 Airplane ID : {{v.airplane_id}}<br>
+               </div>
+           </div>
+      {% endfor %}
+    {% endif %}
+  </div>

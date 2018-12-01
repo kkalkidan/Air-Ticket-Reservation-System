@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" id = "bootstrap-css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/base-min.css">
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:hover {background-color:#f5f5f5;}
+
+</style>
+</head>
+<body>
+<div class="w3-top">
+    <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+
+        <div class="w3-center w3-padding-16">
+            <center><img src="http://ashamafrica.com/images/Sheba-Miles.png" alt="Image result for smiley stickers" width="300" height="50" /></center>
+
+        </div>
+    </div>
+</div>
+<div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+<h2>Flight Purchase History</h2>
+<table id = "my_flights">
+  <tr>
+    <th>Ticket_ID</th>
+    <th>Customer_Email</th>
+    <th>Purchase_Date</th>
+  </tr>
+
+</table>
+
+</body>
+<script type="text/javascript">
+    //to construct the table
+    console.log("ddd");
+
+    var table = document.getElementById("my_flights");
+    var all_flights = {{ all_flights|tojson }};
+    for (var i = 0; i < Object.keys(all_flights).length; i++){
+        var tr = document.createElement("tr");
+
+        var column_1 = document.createElement("td");
+        var Tick_ID = document.createTextNode(all_flights[i][0]);
+        column_1.appendChild(Tick_ID);
+
+        var column_2 = document.createElement("td");
+        var Cust_email = document.createTextNode(all_flights[i][1]);
+        column_2.appendChild(Cust_email);
+
+        var column_3 = document.createElement("td");
+        var date = document.createTextNode(all_flights[i][2]);
+        column_3.appendChild(date);
+
+        tr.appendChild(column_1);
+        tr.appendChild(column_2);
+        tr.appendChild(column_3);
+
+        table.appendChild(tr);
+    }
+
+
+</script>
+
+
+
+
+</html>

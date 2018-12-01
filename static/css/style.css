@@ -65,3 +65,27 @@ h1.title {
   text-decoration: none;
   text-transform: uppercase;
 }
+
+#my-div {
+  background-color: #382d2d;
+  width:50%;
+  height: 100%;
+  text-align: center;
+}
+a.fill-div:link {
+  background-color: #999;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+}
+
+p.text{
+    color: azure;
+    font-size: 20px;
+}
+
+a.fill-div:hover {
+    color: #000;
+    text-decoration: none;
+}
