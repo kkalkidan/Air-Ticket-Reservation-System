@@ -94,3 +94,7 @@ class ClientPurchaseForm(Form):
     customer_email = StringField('customer_email', validators=[DataRequired()])
     purchase_date = DateField('purchase date', validators=[DataRequired()])
     # submit = SubmitField('Purchase')
+class AddAirport(Form):
+    airport_name = StringField('Airport name', validators=[DataRequired()])
+    airport_city = StringField('Airport city', validators=[DataRequired()])
+    submit = SubmitField('Add Airport', validators=[DataRequired()])

@@ -178,13 +178,13 @@
     </div>
 
     {{airplane.submit (class='btn-primary')}}
-
+</form>
 </div>
 
 <div>
-  <h1> All airplanes </h1>
-  {% if all_airplanes != null %}
 
+  {% if all_airplanes != null %}
+   <h1> All airplanes </h1>
       {% for v in all_airplanes %}
           Airlines Name : {{v.airline_name}}<br>
           Airplane ID : {{v.airplane_id}}<br>
@@ -195,6 +195,28 @@
 
 
   {% endif %}
+
+<br>
+<br>
+<br>
+  <div>
+
+    <form method='POST' action='#'>
+     {{ form.hidden_tag() }}
+      <div class='form-group'>
+        {{airport.airport_name.label}}
+        {{airport.airport_name}}
+      </div>
+
+      <div class='form-group'>
+        {{airport.airport_city.label}}
+        {{airport.airport_city}}
+      </div>
+
+      {{airport.submit (class='btn-primary')}}
+  </form>
+
+  </div>
 
 
 {% endblock %}

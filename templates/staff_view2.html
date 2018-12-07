@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block layout %}
+
+<div class='search_result'>
+  {% if booking_agent != null %}
+    <h3> Booking Agents </h3>
+    {% for v in booking_agent %}
+         <div class='result'>
+            <div>
+                  Email : {{v.email}}  <br>  </a>
+                  ID : {{v.booking_agent_id}}<br><br>
+             </div>
+         </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+<div class='search_result'>
+  {% if top_agents != null %}
+    <h3> Top 5 Booking Agents </h3>
+    {% for v in booking_agent %}
+         <div class='result'>
+            <div>
+                  Email : {{v.email}}  <br>  </a>
+                  ID : {{v.booking_agent_id}}<br><br>
+             </div>
+         </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+<div class='search_result'>
+  {% if top_flyers != null %}
+    <h3> Frequent Customers </h3>
+    {% for v in top_flyers %}
+         <div class='result'>
+            <div>
+                  Email : {{v.email}}  <br>  </a>
+             </div>
+         </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+
+{% endblock %}

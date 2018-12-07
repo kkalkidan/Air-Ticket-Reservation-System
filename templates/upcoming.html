@@ -197,8 +197,8 @@
                 inner_input.className = "hidden";
                 inner_input.type = "checkbox";
 
-                var fn = my_flights[i][5].toString;
-                inner_input.name = my_flights[i][0] + fn;
+                var fn = my_flights[i][0].toString;
+                inner_input.name = my_flights[i][2] + fn;
                 inner_input.value = i.toString();
                 inner_input.autocomplete = "off";
 
@@ -211,6 +211,7 @@
                 var desc2 = document.createElement("h4");
                 var desc3 = document.createElement("h4");
                 var desc4 = document.createElement("h4");
+                var desc5 = document.createElement("h4");
 
                 var tex1 = my_flights[i][0] + " " + my_flights[i][3] + "$";
                 var node1 = document.createTextNode(tex1);
@@ -228,10 +229,15 @@
                 var node4 = document.createTextNode(tex4);
                 desc4.appendChild(node4);
 
+                var tex5 = ' Flight-' + my_flights[i][5]
+                var node5 = document.createTextNode(tex5);
+                desc5.appendChild(node5);
+
                 inner_div.appendChild(desc1);
                 inner_div.appendChild(desc2);
                 inner_div.appendChild(desc3);
                 inner_div.appendChild(desc4);
+                inner_div.appendChild(desc5);
 
 
                 my_div.appendChild(inner_div);

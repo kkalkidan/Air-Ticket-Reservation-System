@@ -144,3 +144,15 @@ class Purchases(db.Model):
         self.customer_email = customer_email
         self.booking_agent_id = booking_agent_id
         self.purchase_date = purchase_date
+
+class Airport(db.Model):
+    __tablename__ = 'airport'
+
+    airport_name= db.Column(db.String, primary_key=True)
+    airport_city= db.Column(db.String(50))
+
+
+    def __init__(self, airport_name, airport_city):
+
+        self.airport_name = airport_name
+        self.airprot_city = airport_city

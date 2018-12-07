@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, json, session, redirect, url_for
 
 from forms import  UpcomingForm, Login, Signup, FlightForm, StaffForm, StaffSignInForm, FlightSearchByDateRange,\
-                StaffDetails, AddAirPlane, Booking_Agent_SignInForm, AgentPurchaseForm, ClientPurchaseForm
+                StaffDetails, AddAirPlane, Booking_Agent_SignInForm, AgentPurchaseForm, ClientPurchaseForm,\
+                AddAirport
 
 
 
@@ -14,7 +15,7 @@ from sqlalchemy import text, update
 global fofo
 global purchased_flight
 global fl_inf
-global purhcased_ticket
+global purchased_ticket
 
 
 # with open('queries.json') as f:
@@ -46,10 +47,13 @@ def index():
 
 @app.route("/upcoming", methods = ['GET', 'POST'])
 def upcoming():
+    if 'agent_username' not in session:
+        session.clear() #until we implement the logout button
+        return redirect(url_for('booking_agent_login'))
     form = UpcomingForm()
     agent_purhcase_form = AgentPurchaseForm()
     client_purhcase_form = ClientPurchaseForm()
-    check = request.args['check']
+    # check = request.args['check'] // what ??
     check = session['check'] #checks who's searching
     count = 0;
     check3 = 0
@@ -59,7 +63,6 @@ def upcoming():
         purchase_form = client_purhcase_form
 
     if (request.method == 'GET'):
-        #print ("Neeeguh")
         return render_template('upcoming.html', form=form, purchase_form=purchase_form, check2 = 0, check = check, list = [])
     elif (request.method == 'POST'):
         arrival_airport = form.arrival_airport.data
@@ -84,18 +87,20 @@ def upcoming():
         if len(flight_info) == 0 and len(fl_inf) != 0:
             values = request.values
             for item in values.items():
-                #print ("\n\nMa nigga you got it")
                 if item[1].isdigit() and len(fofo) != 0 and item[0]!="check" and item[0]!="booking_agent_id":
                     selected_flight = int(item[1])
                     if len(fl_inf) != 0:
-                        global purchased_flight
+                        # global purchased_flight
                         #flight_info[selected_flight].append(flight[selected_flight].flight_num)
                         purchased_flight = fl_inf[selected_flight]
                         #print(fl_inf[selected_flight])
                         airline_name = fl_inf[selected_flight][0]
                         flight_num = fl_inf[selected_flight][5]
+                        print(airline_name)
+                        print(flight_num)
                         check2 = 3
                         ticket = Ticket.query.filter_by(airline_name=airline_name, flight_num=flight_num).first()
+                        print(ticket)
                         global purchased_ticket
                         purchased_ticket = ticket
                 elif len(fofo) != 0 and item[0]!="check":
@@ -107,7 +112,7 @@ def upcoming():
                     print(booking_agent_id)
                     print(purchase_date)"""
                     if (booking_agent_id != None):
-                        global purchased_ticket
+                        # global purchased_ticket
                         print (purchased_ticket)
                         purchase = Purchases(purchased_ticket.ticket_id, customer_email, booking_agent_id, purchase_date)
                         db.session.add(purchase);
@@ -160,6 +165,7 @@ def addflight():
         return redirect(url_for('index'))
     form = FlightForm()
     airplane = AddAirPlane()
+    airport = AddAirport()
     if(request.method == 'POST'):
 
         if(form.flight_num.data != None):
@@ -169,19 +175,27 @@ def addflight():
             departure_date_time, form.arrival_airport.data, arrival_date_time, form.price.data, form.status.data, form.airplane_id.data)
             db.session.add(newflight)
             db.session.commit()
-            return render_template('addflight.html', form=form, airplane=airplane)
+            return render_template('addflight.html', form=form, airplane=airplane, airport=airport)
 
         if(airplane.airline_name.data != None):
             newairplane = Airplane(airplane.airline_name.data, airplane.airplane_id.data, airplane.seats.data)
             db.session.add(newairplane);
             all_airplanes = Airplane.query.filter_by(airline_name = session['airline_name'])
             db.session.commit();
-            return render_template('addflight.html', form=form, airplane=airplane, all_airplanes=all_airplanes)
+            return render_template('addflight.html', form=form, airplane=airplane, all_airplanes=all_airplanes,\
+            airport=airport)
+
+        if(airport.airport_name.data != None):
+            newairport= Airport(airport.airport_name, airport_airport_city)
+            db.session.add(newairport)
+            db.commit(airport)
+            return render_template('addflight.html', form=form, airplane=airplane,\
+            airport=airport)
 
 
 
     elif (request.method == 'GET'):
-        return render_template('addflight.html', form=form, airplane=airplane)
+        return render_template('addflight.html', form=form, airplane=airplane, airport=airport)
 
 
 @app.route("/logout")
@@ -189,6 +203,7 @@ def logout():
     print(request)
     session.pop('username', None)
     session.pop('email', None)
+    session.pop('agent_username', None)
     return redirect(url_for('index'))
 
 
@@ -232,7 +247,7 @@ def staff_login():
 @app.route("/staff_view", methods = ['GET', 'POST'])
 def staff_view():
     if 'username' not in session:
-        return redirect(url_for('upcoming'))
+        return redirect(url_for('staff_login'))
 
     form=UpcomingForm()
     lcform = StaffDetails()
@@ -260,6 +275,44 @@ def staff_view():
 
     return render_template('staff_view.html',dform=dform, flight=flight, form=form, list=list, lcform=lcform, \
                             update=update)
+
+
+@app.route("/staff_view2", methods=['GET', 'POST'])
+def staff_view2():
+
+    if 'username' not in session:
+        return redirect(url_for('staff_login'))
+
+    agent = Booking_Agent.query.filter_by().all()
+
+    x = datetime.datetime.today().date()
+    y = x - datetime.timedelta(days=365)
+    print(x, y)
+    sql_top_agents = text(
+          "SELECT booking_agent.email\
+          FROM booking_agent, purchases\
+          WHERE booking_agent.booking_agent_id = purchases.booking_agent_id \
+          GROUP BY booking_agent.booking_agent_id, booking_agent.email\
+          ORDER BY COUNT(*)\
+          LIMIT 5 ")
+
+    sql_freq_flyers = text(
+          "SELECT purchases.customer_email, ticket.flight_num\
+          FROM purchases, ticket \
+          WHERE purchases.purchase_date between :x and :y \
+                and ticket.airline_name like :z\
+                and ticket.ticket_id = purchases.ticket_id\
+          GROUP BY purchases.customer_email\
+          Having COUNT(*) > 3")
+
+    top_agents=db.engine.execute(sql_top_agents)
+    top_flyers=db.engine.execute(sql_freq_flyers, x = str(x) + '00:00', y = str(y) +'00:00', \
+                z = session['airline_name'])
+    print(top_agents)
+    return render_template('staff_view2.html', booking_agent=agent, top_agents=top_agents, \
+    top_flyers=top_flyers)
+
+
 
 
 @app.route("/list_customers", methods=['GET', 'POST'])
@@ -296,6 +349,9 @@ def booking_agent_login():
 
 @app.route("/booking_agent_view", methods = ['GET', 'POST'])
 def booking_agent_view():
+    if 'agent_username' not in session:
+        session.clear() #until we implement the logout button
+        return redirect(url_for('booking_agent_login'))
     if request.method == 'POST':
         values = request.values
         action = []
@@ -318,6 +374,9 @@ def booking_agent_view():
 
 @app.route("/my_flights", methods = ["GET"])
 def my_flights():
+    if 'agent_username' not in session:
+        session.clear() #until we implement the logout button
+        return redirect(url_for('booking_agent_login'))
     booking_agent_id = session["agent_id"]
 
     my_flights = Purchases.query.filter_by(booking_agent_id = booking_agent_id).all()
@@ -332,6 +391,10 @@ def my_flights():
     return render_template('booking_agent_my_flight.html', all_flights=all_flights)
 @app.route("/commission", methods = ["GET", "POST"])
 def commission():
+    if 'agent_username' not in session:
+        session.clear() #until we implement the logout button
+        return redirect(url_for('booking_agent_login'))
+
     booking_agent_id = session["agent_id"]
 
     my_flights = Purchases.query.filter_by(booking_agent_id=booking_agent_id).all()
@@ -355,6 +418,9 @@ def commission():
 @app.route("/top_customers", methods = ["GET"])
 def top_customers():
     #all the graphing goes here
+    if 'agent_username' not in session:
+        session.clear() #until we implement the logout button
+        return redirect(url_for('booking_agent_login'))
     booking_agent_id = session["agent_id"]
     print (booking_agent_id)
     my_flights = Purchases.query.filter_by(booking_agent_id = booking_agent_id).all()
@@ -383,6 +449,7 @@ def top_customers():
     top_customer_commission = max_user[1]
     print(max_user)
     return render_template('top_customers.html', top_customer = top_customer, top_customer_commission = top_customer_commission)
+
 
 
 
